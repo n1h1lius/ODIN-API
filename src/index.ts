@@ -76,7 +76,8 @@ export default {
       example: "/havamal/norse/random",
       books_available,
       actions_available,
-      note: "More books like Voluspa, Völsunga saga and Skírnismál will be added soon"
+      note: "More books like Voluspa, Völsunga saga and Skírnismál will be added soon",
+      reference: "Visit https://github.com/n1h1lius/ODIN-API for more information"
       }),
       { headers: { "Content-Type": "application/json" } }
     );
