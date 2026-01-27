@@ -1,170 +1,159 @@
-# **ODIN API**
-A lightweight, blazing‑fast Cloudflare Worker API for retrieving stanzas from Norse texts.
+#  **ODIN API** 
 
-ODIN API provides structured access to mythological and historical Nordic works, starting with the **Hávamál** in multiple languages and writing systems.  
-It is designed for developers, linguists, researchers, and anyone who wants programmatic access to Old Norse wisdom.
+---
+## ᚠᛁᚾ:ᚦᚢ:ᛚᛁᚦ:ᚦᛁᚾᛅ:ᛁᚦᛅ:ᛋᛘᛁᚦ:ᛁᚾᛅ
+---
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Cloudflare Workers](https://img.shields.io/badge/Platform-Cloudflare_Workers-F38020?logo=cloudflare-workers&logoColor=white)](https://workers.cloudflare.com/)
+[![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
+
+A lightweight, blazing-fast API for retrieving stanzas from Norse texts, built on the edge.
+
+ODIN API provides structured access to mythological and historical Nordic works, starting with the **Hávamál** in multiple languages and ancient writing systems.
 
 ---
 
-## ⚡️ **Base URL**
+## ⚡ Quick Start
+
+**Base URL:**
+```http
+[https://odin-api.orlog.workers.dev](https://odin-api.orlog.workers.dev)
 
 ```
-https://odin-api.orlog.workers.dev
-```
+
+### 📚 Available Corpus
+
+Currently serving: `havamal`
+*Upcoming: Völuspá, Grímnismál, Völsunga saga.*
+
+### 🌍 Supported Languages & Scripts
+
+| Ancient | Scandinavian | Central/West | Eastern |
+| --- | --- | --- | --- |
+| `elderFuthark` | `norse` (Old Norse) | `english` | `ruski` |
+| `youngFuthark` | `bokmal` / `nynorsk` | `deutsch` |  |
+|  | `dansk` / `svenska` | `spanish` |  |
+|  | `islenska` | `french` |  |
 
 ---
 
-## 📚 **Available Books**
+## 🔧 API Endpoints
 
-Currently supported:
+All requests follow the pattern: `/{book}/{language}/{action}`
 
-- **havamal**
+<i>Click any section to expand it.</i>
 
-More texts (Völuspá, Grímnismál, Völsunga saga, etc.) will be added over time.
+<details>
+<summary><b>1. Get Random Stanza</b></summary>
+
+```http
+GET /{book}/{language}/random
+
+GET /havamal/english/random
+
+```
+
+</details>
+
+<details>
+<summary><b>2. Get All Stanzas</b></summary>
+
+```http
+GET /{book}/{language}/all
+
+GET /havamal/spanish/all
+
+```
+
+</details>
+
+<details>
+<summary><b>3. Specific Stanza by ID</b></summary>
+
+```http
+GET /{book}/{language}/stanza/{id}
+
+GET /havamal/norse/stanza/12
+
+```
+
+</details>
+
+<details>
+<summary><b>4. Search by Keyword</b></summary>
+
+```http
+GET /{book}/{language}/search?word={query}
+
+GET /havamal/english/search?word=odin
+
+```
+
+</details>
+
+<details>
+<summary><b>5. Range of Stanzas</b></summary>
+
+```http
+GET /{book}/{language}/from/{id}/to/{id}
+
+GET /havamal/bokmal/from/1/to/5
+
+```
+
+</details>
 
 ---
 
-## 🌍 **Available Languages**
+## 🧱 Response Format
 
-Depending on the book, languages may include:
-
-- elderFuthark  
-- youngFuthark  
-- norse (Old Norse)  
-- bokmal  
-- nynorsk  
-- dansk  
-- svenska  
-- islenska  
-- deutsch  
-- english  
-- spanish  
-- ruski  
-- french  
-
----
-
-## 🔧 **API Endpoints**
-
-All endpoints follow this structure:
-
-```
-/{book}/{language}/{action}
-```
-
-### **1. Random stanza**
-```
-/{book}/{language}/random
-```
-Returns a single random stanza.
-
-**Example:**
-```
-/havamal/english/random
-```
-
----
-
-### **2. All stanzas**
-```
-/{book}/{language}/all
-```
-Returns the full list of stanzas in the selected language.
-
-**Example:**
-```
-/havamal/spanish/all
-```
-
----
-
-### **3. Specific stanza by ID**
-```
-/{book}/{language}/stanza/{id}
-```
-
-**Example:**
-```
-/havamal/norse/stanza/12
-```
-
----
-
-### **4. Search stanzas by word**
-```
-/{book}/{language}/search?word={query}
-```
-
-Case‑insensitive search across all stanzas.
-
-**Example:**
-```
-/havamal/english/search?word=odin
-```
-
----
-
-### **5. Range of stanzas**
-```
-/{book}/{language}/from/{start}/to/{end}
-```
-
-Returns a slice of the text between two stanza numbers (inclusive).
-
-**Example:**
-```
-/havamal/bokmal/from/1/to/5
-```
-
----
-
-## 🧱 **Response Format**
-
-Each stanza is returned as an array:
+Current legacy format (v1):
 
 ```json
 [
   "Stanza text here...",
   "Stanza 12"
 ]
+
 ```
 
-Future versions will migrate to a richer object format:
-
-```json
-{
-  "id": 12,
-  "text": "Stanza text...",
-  "source": "Codex Regius",
-  "translator": "…"
-}
-```
+> [!NOTE]
+> Future versions will migrate to a richer object format containing metadata like `source` and `translator`.
 
 ---
 
-## 🚀 **Performance**
+## 🤝 Contributing & Support
 
-ODIN API runs entirely on **Cloudflare Workers**, meaning:
+Any help is welcome! Whether you found a typo in a translation or want to add a new language:
 
-- Global edge deployment  
-- Extremely low latency  
-- Zero cold starts  
-- Free tier friendly  
+### 🛠️ How to contribute:
 
----
+1. **Reporting Errors:** Please [Open an Issue](https://www.google.com/search?q=https://github.com/n1h1lius/ODIN-API/issues) describing the bug or the typo.
+2. **Adding Languages/Features:** - Fork the repository.
+* Create a new branch (`git checkout -b feature/new-language`).
+* Commit your changes.
+* Open a **Pull Request** explaining your contribution.
 
-## 🛠️ **Planned Features**
 
-- Additional Eddic poems  
-- Saga chapters  
-- Metadata endpoints  
-- JSON schema for stanzas  
-- Parallel multi‑language queries  
-- Runic transliteration tools  
+
+### 🌐 Translation Support
+
+If you are a linguist or native speaker and want to help us include more texts in your language, please reach out via Issues!
 
 ---
 
-## 📜 **License**
+## 🚀 Performance & Tech
 
-All code is MIT‑licensed.  
-Textual content follows the licensing of each translation source.
+* **Zero Cold Starts:** Powered by V8 isolates.
+* **Edge Computing:** Deployed globally via Cloudflare Workers.
+* **Lightweight:** Minimal overhead for maximum speed.
+
+---
+
+## 📜 License
+
+Code: **MIT**.
+
+Content: Textual content follows the licensing of each respective translation source.
+
