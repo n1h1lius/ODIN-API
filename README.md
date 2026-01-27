@@ -18,7 +18,7 @@ ODIN API provides structured access to mythological and historical Nordic works,
 
 **Base URL:**
 ```http
-[https://odin-api.orlog.workers.dev](https://odin-api.orlog.workers.dev)
+https://odin-api.orlog.workers.dev
 
 ```
 
