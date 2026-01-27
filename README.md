@@ -1,25 +1,170 @@
-# Cloudflare Workers OpenAPI 3.1
+# **ODIN API**
+A lightweight, blazing‑fast Cloudflare Worker API for retrieving stanzas from Norse texts.
 
-This is a Cloudflare Worker with OpenAPI 3.1 using [chanfana](https://github.com/cloudflare/chanfana) and [Hono](https://github.com/honojs/hono).
+ODIN API provides structured access to mythological and historical Nordic works, starting with the **Hávamál** in multiple languages and writing systems.  
+It is designed for developers, linguists, researchers, and anyone who wants programmatic access to Old Norse wisdom.
 
-This is an example project made to be used as a quick start into building OpenAPI compliant Workers that generates the
-`openapi.json` schema automatically from code and validates the incoming request to the defined parameters or request body.
+---
 
-## Get started
+## ⚡️ **Base URL**
 
-1. Sign up for [Cloudflare Workers](https://workers.dev). The free tier is more than enough for most use cases.
-2. Clone this project and install dependencies with `npm install`
-3. Run `wrangler login` to login to your Cloudflare account in wrangler
-4. Run `wrangler deploy` to publish the API to Cloudflare Workers
+```
+https://odin-api.orlog.workers.dev
+```
 
-## Project structure
+---
 
-1. Your main router is defined in `src/index.ts`.
-2. Each endpoint has its own file in `src/endpoints/`.
-3. For more information read the [chanfana documentation](https://chanfana.pages.dev/) and [Hono documentation](https://hono.dev/docs).
+## 📚 **Available Books**
 
-## Development
+Currently supported:
 
-1. Run `wrangler dev` to start a local instance of the API.
-2. Open `http://localhost:8787/` in your browser to see the Swagger interface where you can try the endpoints.
-3. Changes made in the `src/` folder will automatically trigger the server to reload, you only need to refresh the Swagger interface.
+- **havamal**
+
+More texts (Völuspá, Grímnismál, Völsunga saga, etc.) will be added over time.
+
+---
+
+## 🌍 **Available Languages**
+
+Depending on the book, languages may include:
+
+- elderFuthark  
+- youngFuthark  
+- norse (Old Norse)  
+- bokmal  
+- nynorsk  
+- dansk  
+- svenska  
+- islenska  
+- deutsch  
+- english  
+- spanish  
+- ruski  
+- french  
+
+---
+
+## 🔧 **API Endpoints**
+
+All endpoints follow this structure:
+
+```
+/{book}/{language}/{action}
+```
+
+### **1. Random stanza**
+```
+/{book}/{language}/random
+```
+Returns a single random stanza.
+
+**Example:**
+```
+/havamal/english/random
+```
+
+---
+
+### **2. All stanzas**
+```
+/{book}/{language}/all
+```
+Returns the full list of stanzas in the selected language.
+
+**Example:**
+```
+/havamal/spanish/all
+```
+
+---
+
+### **3. Specific stanza by ID**
+```
+/{book}/{language}/stanza/{id}
+```
+
+**Example:**
+```
+/havamal/norse/stanza/12
+```
+
+---
+
+### **4. Search stanzas by word**
+```
+/{book}/{language}/search?word={query}
+```
+
+Case‑insensitive search across all stanzas.
+
+**Example:**
+```
+/havamal/english/search?word=odin
+```
+
+---
+
+### **5. Range of stanzas**
+```
+/{book}/{language}/from/{start}/to/{end}
+```
+
+Returns a slice of the text between two stanza numbers (inclusive).
+
+**Example:**
+```
+/havamal/bokmal/from/1/to/5
+```
+
+---
+
+## 🧱 **Response Format**
+
+Each stanza is returned as an array:
+
+```json
+[
+  "Stanza text here...",
+  "Stanza 12"
+]
+```
+
+Future versions will migrate to a richer object format:
+
+```json
+{
+  "id": 12,
+  "text": "Stanza text...",
+  "source": "Codex Regius",
+  "translator": "…"
+}
+```
+
+---
+
+## 🚀 **Performance**
+
+ODIN API runs entirely on **Cloudflare Workers**, meaning:
+
+- Global edge deployment  
+- Extremely low latency  
+- Zero cold starts  
+- Free tier friendly  
+
+---
+
+## 🛠️ **Planned Features**
+
+- Additional Eddic poems  
+- Saga chapters  
+- Metadata endpoints  
+- JSON schema for stanzas  
+- Parallel multi‑language queries  
+- Runic transliteration tools  
+
+---
+
+## 📜 **License**
+
+All code is MIT‑licensed.  
+Textual content follows the licensing of each translation source.
