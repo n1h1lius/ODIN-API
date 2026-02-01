@@ -63,12 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // Fallback if the .content div is not found in the target file
                 console.warn('Selector .content not found in the target file.');
-                window.location.href = filePath;
+                //window.location.href = filePath;
             }
         } catch (err) {
             console.error("Scraping failed:", err);
             // Fallback: If fetch fails (like CORS or 404), do a hard reload
-            window.location.href = filePath;
+            //window.location.href = filePath;
         }
     }
 
