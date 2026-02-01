@@ -10,31 +10,44 @@ import { handleMetadata } from "./js/parsers/metadata_parser.js";
 import { help } from "./js/utils/helper.js";
 
 
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type"
+};
+
+
 export default {
-
-
   async fetch(request) {
     const url = new URL(request.url);
     let path = url.pathname;
 
-    // ---------------------------------------------------------------------------------------------------------
-    // 											                        PATH PARSING
-    // ---------------------------------------------------------------------------------------------------------
-    
+    // CORS preflight
+    if (request.method === "OPTIONS") {
+      return new Response(null, { headers: corsHeaders });
+    }
 
     const parts = path.split("/").filter(Boolean);
 
-    // Filter Advanced Queries
-    if (parts[0] === "help" || parts[0] === undefined) {return help();}
-    if (parts[0] === "advanced") {return handleAdvanced(parts, url, advanced_books);}
-    if (parts[0] === "metadata") {return handleMetadata(parts, url);}
+    let response;
 
-    return handleLegacy(parts, url, books);
+    if (parts[0] === "help" || parts[0] === undefined) {response = help();} 
+    else if (parts[0] === "advanced") {response = handleAdvanced(parts, url, advanced_books);}
+    else if (parts[0] === "metadata") {response = handleMetadata(parts, url);} 
+    else {response = handleLegacy(parts, url, books);}
+
+    // Añadir CORS a la respuesta final
+    return new Response(response.body, {
+      status: response.status,
+      headers: {
+        ...Object.fromEntries(response.headers),
+        ...corsHeaders
+      }
+    });
   }
-
-
-    
 }
+
 
 
   
