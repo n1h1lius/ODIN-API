@@ -1,59 +1,180 @@
+
+
+/* MEDIA QUERIES AND FONTS FROM BLOGGER */
+@media(max-width:768px) {
+    .profile-wrapper {
+        width: 260px;
+        height: 260px;
+    }
+    .blog-title a {
+        font-size: 3.6rem;
+        letter-spacing: 5px;
+    }
+}
+
+/* NORSE FONT - REGULAR */
+@font-face {
+    font-family: 'Norse';
+    src: url('https://rawcdn.githack.com/n1h1lius/Nordic-Fonts/main/fonts/Valheim/norse-webfont.woff2') format('woff2'),
+         url('https://rawcdn.githack.com/n1h1lius/Nordic-Fonts/main/fonts/Valheim/norse-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+/* NORSE FONT - BOLD */
+@font-face {
+    font-family: 'Norse';
+    src: url('https://rawcdn.githack.com/n1h1lius/Nordic-Fonts/main/fonts/Valheim/norsebold-webfont.woff2') format('woff2'),
+         url('https://rawcdn.githack.com/n1h1lius/Nordic-Fonts/main/fonts/Valheim/norsebold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: block;
+}
+
+/* GENERAL SITE FROM BLOGGER */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 body {
-  margin: 0;
-  padding: 0;
-  background: #0d0d0d;
-  color: #e6e6e6;
-  font-family: "Inter", sans-serif;
-  display: flex;
-  animation: fadeIn 0.8s ease-out;
+    background: #050505;
+    color: #e0e0e0;
+    font-family: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+    line-height: 1.55;
+    animation: fadeIn 0.8s ease-out;
 }
-
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
-
-.sidebar {
-  width: 260px;
-  background: #1a1a1a;
-  padding: 20px;
-  height: 100vh;
-  position: fixed;
-  border-right: 1px solid #333;
+a {
+    color: #c9a968; /* bronce envejecido / oro nórdico apagado */
+    text-decoration: none;
+    transition: color 0.35s ease;
 }
-
-.sidebar h2 {
-  color: #fff;
-  margin-bottom: 20px;
+a:hover,
+a:focus {
+    color: #e8d5a3;
+    text-shadow: 0 0 8px rgba(201,169,104,0.35);
 }
-
-.sidebar nav a {
-  display: block;
-  color: #7db9ff;
-  text-decoration: none;
-  margin: 10px 0;
-  transition: 0.2s;
+h1, h2, h3 {
+    font-family: 'Norse', serif;
+    color: #fff;
 }
-
-.sidebar nav a:hover {
-  color: #a8d4ff;
-  transform: translateX(4px);
-}
-
-.content {
-  margin-left: 260px;
-  padding: 40px;
-  max-width: 900px;
-}
-
-h1 {
-  color: #fff;
-  margin-top: 40px;
-}
-
 pre {
-  background: #1a1a1a;
-  padding: 10px;
-  border-radius: 6px;
-  overflow-x: auto;
+    background: #1a1a1a;
+    padding: 10px;
+    border-radius: 6px;
+    overflow-x: auto;
 }
+
+/* SIDEBAR */
+.sidebar {
+    width: 260px;
+    background: #1a1a1a;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    border-right: 1px solid #333;
+}
+.sidebar h2 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-family: 'Norse', serif;
+    font-size: 2.5rem;
+    text-align: center;
+}
+.sidebar .profile-wrapper {
+    display: block;
+    margin: 0 auto 10px;
+    width: 180px;
+    height: 180px;
+}
+.sidebar .username {
+    display: block;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+.sidebar nav li {
+    margin: 10px 0;
+}
+.sidebar nav a {
+    display: block;
+    color: #7db9ff;
+    text-decoration: none;
+    transition: 0.2s;
+    font-family: 'Norse', serif;
+}
+.sidebar nav a:hover {
+    color: #a8d4ff;
+    transform: translateX(4px);
+}
+.sidebar nav ul ul {
+    display: none;
+    padding-left: 20px;
+}
+.sidebar nav li.has-sub > a::after {
+    content: ' ▼';
+    font-size: 0.8rem;
+}
+.sidebar nav li.active > ul {
+    display: block;
+}
+.sidebar nav li.active > a::after {
+    content: ' ▲';
+}
+
+/* CONTENT */
+.content {
+    margin-left: 260px;
+    padding: 40px;
+    max-width: 900px;
+}
+
+/* FOOTER */
+footer {
+    background: rgba(8,10,14,0.94);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    margin-left: 260px;
+}
+.havamal {
+    font-family: 'Norse', serif;
+    font-style: italic;
+    color: #c9a968;
+    font-size: 1.5rem;
+    background: rgba(8,10,14,0.75);
+    border: 1px solid rgba(201,169,104,0.25);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.7), 0 0 50px rgba(201,169,104,0.12);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 10px;
+    }
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+    footer {
+        margin-left: 0;
+    }
+}
+

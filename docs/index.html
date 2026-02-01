@@ -2,58 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ODINN API Documentation</title>
+  <title>ODINN API Documentation - Introduction</title>
   <link rel="stylesheet" href="styles/main.css">
   <script defer src="scripts/main.js"></script>
 </head>
-
 <body>
-
   <aside class="sidebar">
     <h2>ODINN API</h2>
+    <div class="profile-wrapper">
+      <img src="https://avatars.githubusercontent.com/n1h1lius" alt="n1h1lius Profile">
+    </div>
+    <a href="https://github.com/n1h1lius" class="username">n1h1lius</a>
     <nav>
-      <a href="#intro">Introduction</a>
-      <a href="#modes">Usage Modes</a>
-      <a href="#legacy">Legacy Mode</a>
-      <a href="#advanced">Advanced Mode</a>
-      <a href="#metadata">Metadata</a>
-      <a href="#endpoints">API Reference</a>
+      <ul>
+        <li class="has-sub active"><a href="index.html">Introduction</a>
+          <ul>
+            <li><a href="#goals">Goals</a></li>
+            <li><a href="#current-focus">Current Focus</a></li>
+          </ul>
+        </li>
+        <li class="has-sub"><a href="./static/usage-modes.html">Usage Modes</a>
+          <ul>
+            <li><a href="./static/legacy-mode.html">Legacy Mode</a></li>
+            <li><a href="./static/advanced-mode.html">Advanced Mode</a></li>
+            <li><a href="./static/usage-modes.html#metadata-mode">Metadata Mode (planned)</a></li>
+          </ul>
+        </li>
+        <li class="has-sub"><a href="./static/api-reference.html">API Reference</a>
+          <ul>
+            <li><a href="./static/api-reference.html#legacy-endpoints">Legacy Endpoints</a></li>
+            <li><a href="./static/api-reference.html#advanced-endpoints">Advanced Endpoints</a></li>
+            <li><a href="./static/api-reference.html#metadata-endpoints">Metadata Endpoints (planned)</a></li>
+          </ul>
+        </li>
+      </ul>
     </nav>
   </aside>
 
   <main class="content">
-
-    <section id="intro">
+    <section id="introduction">
       <h1>Introduction</h1>
-      <p>ODINN API — Old Norse Lore as a Service.</p>
+      <p>ODINN API is a minimalist HTTP API that exposes Old Norse texts (Hávamál, and later Völuspá, Völsunga saga, Skírnismál, etc.) in a structured, machine-friendly format.</p>
+      <p>The core ideas:</p>
+      <ul>
+        <li>Simple, predictable URLs</li>
+        <li>Clean JSON responses</li>
+        <li>Separation between <strong>Legacy Mode</strong> and <strong>Advanced Mode</strong></li>
+        <li>Extensible data model for authors, editions, and metadata</li>
+      </ul>
     </section>
 
-    <section id="modes">
-      <h1>Usage Modes</h1>
-      <p>Legacy, Advanced, and Metadata (planned).</p>
+    <section id="goals">
+      <h2>Goals</h2>
+      <ul>
+        <li>Provide a stable base for linguistic, literary, and historical exploration</li>
+        <li>Allow programmatic access to stanzas, ranges, and search</li>
+        <li>Support multiple languages and translations</li>
+      </ul>
     </section>
 
-    <section id="legacy">
-      <h1>Legacy Mode</h1>
-      <pre><code>GET /havamal/english/random</code></pre>
+    <section id="current-focus">
+      <h2>Current Focus</h2>
+      <ul>
+        <li><code>Hávamál</code> in multiple languages (Legacy Mode)</li>
+        <li><code>Hávamál</code> with author-based access (Advanced Mode, e.g. Jackson Crawford)</li>
+      </ul>
     </section>
-
-    <section id="advanced">
-      <h1>Advanced Mode</h1>
-      <pre><code>GET /advanced/havamal/author/jackson_crawford/random</code></pre>
-    </section>
-
-    <section id="metadata">
-      <h1>Metadata Mode</h1>
-      <p>Coming soon.</p>
-    </section>
-
-    <section id="endpoints">
-      <h1>API Reference</h1>
-      <p>Full endpoint list coming soon.</p>
-    </section>
-
   </main>
 
+  <footer>
+    <div class="havamal">
+      <p id="havamal-quote">Loading random Hávamál stanza...</p>
+    </div>
+  </footer>
 </body>
 </html>
