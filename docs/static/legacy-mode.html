@@ -1,22 +1,24 @@
-<section id="legacy-mode">
-      <h1>Legacy Mode</h1>
-      <p>Legacy Mode uses the following pattern:</p>
-      <pre><code>/{book}/{language}/{action}</code></pre>
-      <h3>Example</h3>
-      <pre><code>/havamal/english/random
-/havamal/norse/all
-/havamal/deutsch/stanza/5
-/havamal/spanish/search?word=odin
-/havamal/norse/from/1/to/10</code></pre>
-      <h3>Actions</h3>
-      <ul>
-        <li>/random → Returns a random stanza</li>
-        <li>/all → Returns all stanzas</li>
-        <li>/stanza/{id} → Returns a specific stanza</li>
-        <li>/search?word={query} → Returns all stanzas containing the word</li>
-        <li>/from/{start}/to/{end} → Returns a range of stanzas</li>
-      </ul>
-      <h3>Notes</h3>
-      <p>If the requested language is not available, the API falls back to english.</p>
-      <p>Legacy data is stored in simple arrays, optimized for speed and simplicity.</p>
-</section>
+<div class="content">
+  <section id="legacy-mode">
+        <h1>Legacy Mode</h1>
+        <p>Legacy Mode uses the following pattern:</p>
+        <pre><code>/{book}/{language}/{action}</code></pre>
+        <h3>Example</h3>
+        <pre><code>/havamal/english/random
+  /havamal/norse/all
+  /havamal/deutsch/stanza/5
+  /havamal/spanish/search?word=odin
+  /havamal/norse/from/1/to/10</code></pre>
+        <h3>Actions</h3>
+        <ul>
+          <li>/random → Returns a random stanza</li>
+          <li>/all → Returns all stanzas</li>
+          <li>/stanza/{id} → Returns a specific stanza</li>
+          <li>/search?word={query} → Returns all stanzas containing the word</li>
+          <li>/from/{start}/to/{end} → Returns a range of stanzas</li>
+        </ul>
+        <h3>Notes</h3>
+        <p>If the requested language is not available, the API falls back to english.</p>
+        <p>Legacy data is stored in simple arrays, optimized for speed and simplicity.</p>
+  </section>
+</div>
