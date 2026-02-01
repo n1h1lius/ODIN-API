@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('ODINN API Docs loaded - Version 1.0.0');
     const contentContainer = document.querySelector('.content');
     const quoteEl = document.getElementById('havamal-quote');
 
