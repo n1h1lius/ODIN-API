@@ -1,18 +1,4 @@
-
-
-/* MEDIA QUERIES AND FONTS FROM BLOGGER */
-@media(max-width:768px) {
-    .profile-wrapper {
-        width: 260px;
-        height: 260px;
-    }
-    .blog-title a {
-        font-size: 3.6rem;
-        letter-spacing: 5px;
-    }
-}
-
-/* NORSE FONT - REGULAR */
+/* NORSE FONT */
 @font-face {
     font-family: 'Norse';
     src: url('https://rawcdn.githack.com/n1h1lius/Nordic-Fonts/main/fonts/Valheim/norse-webfont.woff2') format('woff2'),
@@ -21,8 +7,6 @@
     font-style: normal;
     font-display: block;
 }
-
-/* NORSE FONT - BOLD */
 @font-face {
     font-family: 'Norse';
     src: url('https://rawcdn.githack.com/n1h1lius/Nordic-Fonts/main/fonts/Valheim/norsebold-webfont.woff2') format('woff2'),
@@ -32,149 +16,142 @@
     font-display: block;
 }
 
-/* GENERAL SITE FROM BLOGGER */
+/* RESET + BASE */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-body {
+html, body {
+    height: 100%;
     background: #050505;
     color: #e0e0e0;
-    font-family: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
-    overflow-x: hidden;
-    line-height: 1.55;
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 18px;          
+    line-height: 1.6;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     animation: fadeIn 0.8s ease-out;
 }
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-a {
-    color: #c9a968; /* bronce envejecido / oro nórdico apagado */
-    text-decoration: none;
-    transition: color 0.35s ease;
-}
-a:hover,
-a:focus {
-    color: #e8d5a3;
-    text-shadow: 0 0 8px rgba(201,169,104,0.35);
-}
-h1, h2, h3 {
-    font-family: 'Norse', serif;
-    color: #fff;
-}
-pre {
-    background: #1a1a1a;
-    padding: 10px;
-    border-radius: 6px;
-    overflow-x: auto;
-}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* LINKS + HEADINGS */
+a { color: #c9a968; text-decoration: none; transition: all 0.3s; }
+a:hover { color: #e8d5a3; text-shadow: 0 0 8px rgba(201,169,104,0.4); }
+h1, h2, h3 { font-family: 'Norse', serif; color: #d9d1c0; margin: 1.2em 0 0.6em; }
+h1 { font-size: 3.8rem; letter-spacing: 4px; }
+h2 { font-size: 2.6rem; }
+h3 { font-size: 2rem; }
+pre, code { font-size: 1.05rem; background: #111; padding: 1rem; border-radius: 8px; }
 
 /* SIDEBAR */
 .sidebar {
-    width: 260px;
-    background: #1a1a1a;
-    padding: 20px;
+    width: 280px;
+    background: rgba(10,10,15,0.98);
+    padding: 2rem 1.5rem;
     height: 100vh;
     position: fixed;
-    border-right: 1px solid #333;
+    top: 0; left: 0;
+    border-right: 1px solid #2a2a2a;
+    overflow-y: auto;
+    z-index: 100;
 }
 .sidebar h2 {
-    color: #fff;
-    margin-bottom: 20px;
     font-family: 'Norse', serif;
-    font-size: 2.5rem;
+    font-size: 3.2rem;
     text-align: center;
+    color: #d9d1c0;
+    margin-bottom: 1.5rem;
+    letter-spacing: 6px;
 }
-.sidebar .profile-wrapper {
-    display: block;
-    margin: 0 auto 10px;
-    width: 180px;
-    height: 180px;
+.profile-wrapper {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid rgba(201,169,104,0.4);
+    box-shadow: 0 0 30px rgba(201,169,104,0.25);
 }
-.sidebar .username {
+.profile-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.username {
     display: block;
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    color: #c9a968;
+    margin-bottom: 2rem;
 }
-.sidebar nav ul {
-    list-style: none;
-    padding: 0;
-}
-.sidebar nav li {
-    margin: 10px 0;
-}
-.sidebar nav a {
+nav ul { list-style: none; }
+nav li { margin: 0.8rem 0; }
+nav a {
     display: block;
-    color: #7db9ff;
-    text-decoration: none;
-    transition: 0.2s;
+    color: #a0c0ff;
     font-family: 'Norse', serif;
+    font-size: 1.4rem;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    transition: all 0.25s;
 }
-.sidebar nav a:hover {
-    color: #a8d4ff;
-    transform: translateX(4px);
-}
-.sidebar nav ul ul {
-    display: none;
-    padding-left: 20px;
-}
-.sidebar nav li.has-sub > a::after {
-    content: ' ▼';
-    font-size: 0.8rem;
-}
-.sidebar nav li.active > ul {
-    display: block;
-}
-.sidebar nav li.active > a::after {
-    content: ' ▲';
-}
+nav a:hover { background: rgba(201,169,104,0.12); color: #e8d5a3; }
+nav ul ul { padding-left: 1.4rem; display: none; font-size: 1.25rem; }
+nav li.has-sub > a::after { content: ' ▼'; font-size: 0.9rem; }
+nav li.active > ul { display: block; }
+nav li.active > a::after { content: ' ▲'; }
 
-/* CONTENT */
+/* MAIN CONTENT */
 .content {
-    margin-left: 260px;
-    padding: 40px;
-    max-width: 900px;
+    margin-left: 280px;
+    padding: 3rem 2.5rem 6rem;
+    flex: 1;
+    max-width: 1100px;
 }
 
 /* FOOTER */
 footer {
-    background: rgba(8,10,14,0.94);
-    padding: 20px;
+    background: rgba(8,10,14,0.96);
+    padding: 2rem;
     text-align: center;
-    position: relative;
-    margin-left: 260px;
+    border-top: 1px solid rgba(201,169,104,0.2);
+    margin-left: 280px;
 }
 .havamal {
     font-family: 'Norse', serif;
     font-style: italic;
     color: #c9a968;
-    font-size: 1.5rem;
-    background: rgba(8,10,14,0.75);
-    border: 1px solid rgba(201,169,104,0.25);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: inset 0 0 40px rgba(0,0,0,0.7), 0 0 50px rgba(201,169,104,0.12);
+    font-size: 1.9rem;
     max-width: 900px;
     margin: 0 auto;
+    padding: 1.5rem;
+    background: rgba(20,22,28,0.7);
+    border: 1px solid rgba(201,169,104,0.25);
+    border-radius: 10px;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
 }
 
 /* RESPONSIVE */
+@media (max-width: 900px) {
+    .sidebar { width: 240px; }
+    .content { margin-left: 240px; padding: 2rem 1.5rem; }
+    footer { margin-left: 240px; }
+}
 @media (max-width: 768px) {
     .sidebar {
         width: 100%;
         height: auto;
         position: relative;
-        padding: 10px;
+        padding: 1.5rem;
     }
-    .content {
-        margin-left: 0;
-        padding: 20px;
-    }
-    footer {
+    .content, footer {
         margin-left: 0;
     }
+    h1 { font-size: 3rem; }
+    nav a { font-size: 1.3rem; }
 }
-
