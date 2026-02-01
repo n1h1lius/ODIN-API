@@ -88,7 +88,7 @@ pre, code { font-size: 1.05rem; background: #111; padding: 1rem; border-radius: 
 
 .sidebar {
     width: auto;
-    min-width: 320px;
+    min-width: 30vw;
     max-width: 30vw;
     background: rgba(10,10,15,0.98);
     padding: 2.5rem 1.8rem;
@@ -130,6 +130,15 @@ pre, code { font-size: 1.05rem; background: #111; padding: 1rem; border-radius: 
     color: #c9a968;
     margin-bottom: 2.5rem;
 }
+
+.sidebar-navegator {
+
+    height: 100%;
+    min-height: 10vh;
+    max-height: 55vh;
+    overflow-y: auto;
+}
+
 nav ul { list-style: none; }
 nav li { margin: 1rem 0; }
 nav a, .nav-link {
