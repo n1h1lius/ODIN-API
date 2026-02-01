@@ -2,72 +2,77 @@ document.addEventListener('DOMContentLoaded', () => {
     const contentContainer = document.querySelector('.content');
     const quoteEl = document.getElementById('havamal-quote');
 
-    // 1. Function to update only the footer wisdom
+    // Utility: Update the footer quote
     async function updateFooterQuote() {
         if (!quoteEl) return;
         try {
             const response = await fetch('https://odin-api.orlog.workers.dev/havamal/english/random');
             const data = await response.json();
             quoteEl.textContent = Array.isArray(data) ? data[0].trim() : data.trim();
-        } catch (err) { console.error("Quote error"); }
+        } catch (err) {
+            quoteEl.textContent = '“A verse could not be fetched… but wisdom remains.”';
+        }
     }
 
-    // 2. The core injection function
+    // Surgical Injection Logic
     async function injectContent(url) {
-        // Fade out ONLY the content
         contentContainer.style.opacity = '0';
 
         try {
             const response = await fetch(url);
+            if (!response.ok) throw new Error("File not found");
             const html = await response.text();
 
-            // We use a timeout to let the fade-out finish
             setTimeout(() => {
-                // If the file is a full HTML, we extract .content
-                // If the file is just a fragment, we inject it directly
-                if (html.includes('<main')) {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    contentContainer.innerHTML = doc.querySelector('.content').innerHTML;
-                } else {
-                    contentContainer.innerHTML = html;
-                }
-
+                // Use DOMParser to handle both full HTML files and fragments
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // If the fetched file has a .content div, take only that.
+                // Otherwise, take the whole body (for fragments).
+                const newContent = doc.querySelector('.content') || doc.body;
+                
+                contentContainer.innerHTML = newContent.innerHTML;
+                
                 contentContainer.style.opacity = '1';
                 window.scrollTo(0, 0);
                 updateFooterQuote();
             }, 300);
         } catch (err) {
-            console.error("Could not load fragment:", err);
+            console.error("Injection error:", err);
+            // On GitHub Pages, if AJAX fails, we don't want to leave it empty
+            window.location.href = url; 
         }
     }
 
-    // 3. Event Listener for Navigation
     document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
-        if (!link) return;
+        if (!link || !link.href) return;
 
-        const href = link.getAttribute('href');
+        const url = new URL(link.href);
+        
+        // Only intercept if it's the same domain and ends in .html
+        if (url.origin === window.location.origin && url.pathname.endsWith('.html')) {
+            // If it's just an anchor on the current visual page, let it scroll
+            if (url.hash && url.pathname === window.location.pathname) return;
 
-        // Rule: Only intercept internal .html links
-        if (href && href.endsWith('.html') && !href.startsWith('http')) {
             e.preventDefault();
             
-            // Sidebar UI logic: close others, open this one
+            // Handle Sidebar active states
             const parentLi = link.parentElement;
             if (parentLi?.classList.contains('has-sub')) {
                 document.querySelectorAll('.has-sub').forEach(li => li.classList.remove('active'));
                 parentLi.classList.add('active');
             }
 
-            // Perform the injection
-            injectContent(href);
-            
-            // Update URL without reloading
-            history.pushState(null, '', href);
+            injectContent(link.href);
+            history.pushState(null, '', link.href);
         }
     });
 
-    // Initial load
+    window.addEventListener('popstate', () => {
+        injectContent(window.location.href);
+    });
+
     updateFooterQuote();
 });
