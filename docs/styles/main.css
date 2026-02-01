@@ -27,7 +27,7 @@ html, body {
     background: #050505;
     color: #e0e0e0;
     font-family: 'Cinzel', Georgia, serif;
-    font-size: 18px;          
+    font-size: 18px;
     line-height: 1.6;
 }
 body {
@@ -36,16 +36,57 @@ body {
     min-height: 100vh;
     animation: fadeIn 0.8s ease-out;
 }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
 
 /* LINKS + HEADINGS */
-a { color: #c9a968; text-decoration: none; transition: all 0.3s; }
-a:hover { color: #e8d5a3; text-shadow: 0 0 8px rgba(201,169,104,0.4); }
-h1, h2, h3 { font-family: 'Norse', serif; color: #d9d1c0; margin: 1.2em 0 0.6em; }
+a {
+    color: #c9a968;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+a:hover {
+    color: #e8d5a3;
+    text-shadow: 0 0 8px rgba(201,169,104,0.4);
+}
+h1, h2, h3 {
+    font-family: 'Norse', serif;
+    color: #d9d1c0;
+    margin: 1.2em 0 0.6em;
+}
 h1 { font-size: 3.8rem; letter-spacing: 4px; }
 h2 { font-size: 2.6rem; }
 h3 { font-size: 2rem; }
-pre, code { font-size: 1.05rem; background: #111; padding: 1rem; border-radius: 8px; }
+pre, code {
+    font-size: 1.05rem;
+    background: #111;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+/* FIXED HEADER WITH RUNES */
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 280px;
+    right: 0;
+    background: rgba(8,10,14,0.96);
+    padding: 1.2rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(201,169,104,0.25);
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+.rune-message {
+    font-family: 'Norse', serif;
+    color: #c9a968;
+    font-size: 2.2rem;
+    letter-spacing: 6px;
+    text-shadow: 0 0 12px rgba(201,169,104,0.4);
+}
 
 /* SIDEBAR */
 .sidebar {
@@ -54,10 +95,11 @@ pre, code { font-size: 1.05rem; background: #111; padding: 1rem; border-radius: 
     padding: 2rem 1.5rem;
     height: 100vh;
     position: fixed;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     border-right: 1px solid #2a2a2a;
     overflow-y: auto;
-    z-index: 100;
+    z-index: 90;
 }
 .sidebar h2 {
     font-family: 'Norse', serif;
@@ -89,8 +131,12 @@ pre, code { font-size: 1.05rem; background: #111; padding: 1rem; border-radius: 
     color: #c9a968;
     margin-bottom: 2rem;
 }
-nav ul { list-style: none; }
-nav li { margin: 0.8rem 0; }
+nav ul {
+    list-style: none;
+}
+nav li {
+    margin: 0.8rem 0;
+}
 nav a {
     display: block;
     color: #a0c0ff;
@@ -100,47 +146,66 @@ nav a {
     border-radius: 6px;
     transition: all 0.25s;
 }
-nav a:hover { background: rgba(201,169,104,0.12); color: #e8d5a3; }
-nav ul ul { padding-left: 1.4rem; display: none; font-size: 1.25rem; }
-nav li.has-sub > a::after { content: ' ▼'; font-size: 0.9rem; }
-nav li.active > ul { display: block; }
-nav li.active > a::after { content: ' ▲'; }
+nav a:hover {
+    background: rgba(201,169,104,0.12);
+    color: #e8d5a3;
+}
+nav ul ul {
+    padding-left: 1.4rem;
+    display: none;
+    font-size: 1.25rem;
+}
+nav li.has-sub > a::after {
+    content: ' ▼';
+    font-size: 0.9rem;
+}
+nav li.active > ul {
+    display: block;
+}
+nav li.active > a::after {
+    content: ' ▲';
+}
 
 /* MAIN CONTENT */
 .content {
     margin-left: 280px;
-    padding: 3rem 2.5rem 6rem;
+    padding: 100px 2.5rem 120px; /* space for fixed header + footer */
     flex: 1;
     max-width: 1100px;
 }
 
-/* FOOTER */
+/* FIXED FOOTER */
 footer {
+    position: fixed;
+    bottom: 0;
+    left: 280px;
+    right: 0;
     background: rgba(8,10,14,0.96);
-    padding: 2rem;
+    padding: 1.2rem 2rem;
     text-align: center;
-    border-top: 1px solid rgba(201,169,104,0.2);
-    margin-left: 280px;
+    border-top: 1px solid rgba(201,169,104,0.25);
+    z-index: 90;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.6);
 }
 .havamal {
     font-family: 'Norse', serif;
     font-style: italic;
     color: #c9a968;
-    font-size: 1.9rem;
-    max-width: 900px;
+    font-size: 1.7rem;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 1.5rem;
-    background: rgba(20,22,28,0.7);
-    border: 1px solid rgba(201,169,104,0.25);
+    padding: 0.8rem 1.5rem;
+    background: rgba(20,22,28,0.75);
+    border: 1px solid rgba(201,169,104,0.3);
     border-radius: 10px;
-    box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.7);
 }
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
     .sidebar { width: 240px; }
-    .content { margin-left: 240px; padding: 2rem 1.5rem; }
-    footer { margin-left: 240px; }
+    .content { margin-left: 240px; }
+    footer, .fixed-header { left: 240px; }
 }
 @media (max-width: 768px) {
     .sidebar {
@@ -149,9 +214,18 @@ footer {
         position: relative;
         padding: 1.5rem;
     }
-    .content, footer {
+    .content, footer, .fixed-header {
         margin-left: 0;
+        left: 0;
+    }
+    .fixed-header {
+        padding: 1rem;
+    }
+    .rune-message {
+        font-size: 1.8rem;
+        letter-spacing: 4px;
     }
     h1 { font-size: 3rem; }
     nav a { font-size: 1.3rem; }
+    .havamal { font-size: 1.4rem; }
 }

@@ -1,4 +1,4 @@
-// Smooth scrolling for #anchors (only if they exist on current page)
+// Smooth scrolling only for anchors that exist on the current page
 document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', e => {
         e.preventDefault();
@@ -6,38 +6,54 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         const target = document.querySelector(targetId);
         if (target) {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            // Anchor not found on this page → do nothing (prevents error)
+            console.log(`Anchor not found on this page: ${targetId}`);
         }
     });
 });
 
-// Collapsible submenus
+// Toggle submenus (only when clicking on parent with children)
 document.querySelectorAll('.sidebar nav li.has-sub > a').forEach(link => {
     link.addEventListener('click', e => {
-        // Only toggle if it's a real submenu trigger (no href or same page)
-        if (!link.getAttribute('href') || link.getAttribute('href').startsWith('#')) {
-            e.preventDefault();
+        const href = link.getAttribute('href');
+        // If it points to another page, let navigation happen normally
+        if (href && !href.startsWith('#') && href !== 'index.html' && href !== '') {
+            return;
         }
-        const parent = link.parentElement;
-        parent.classList.toggle('active');
+        // Otherwise toggle submenu
+        e.preventDefault();
+        link.parentElement.classList.toggle('active');
     });
 });
 
-// Random Hávamál quote (with fallback)
-window.addEventListener('DOMContentLoaded', () => {
+// Load random Hávamál quote
+document.addEventListener('DOMContentLoaded', () => {
     const quoteEl = document.getElementById('havamal-quote');
     if (!quoteEl) return;
 
-    fetch('https://odin-api.orlog.workers.dev/havamal/english/random') 
-        .then(res => {
-            if (!res.ok) throw new Error('API error');
-            return res.json();
+    const apiUrl = 'https://odin-api.orlog.workers.dev/havamal/english/random';
+
+    fetch(apiUrl, { mode: 'cors' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
         })
         .then(data => {
-            const text = data.stanza || data.text || 'Wisdom is better than weapons...';
-            quoteEl.textContent = text;
+            // API returns an array → take first element
+            let stanza = '';
+            if (Array.isArray(data) && data.length > 0) {
+                stanza = data[0].trim();
+            } else if (typeof data === 'string') {
+                stanza = data.trim();
+            }
+
+            quoteEl.textContent = stanza || '“The wise man is not showy about his knowledge…”';
         })
         .catch(err => {
-            console.warn('Failed to load quote:', err);
-            quoteEl.textContent = '“The coward believes he will live forever if he holds back in the battle, but in old age he shall have no peace though spears have spared his limbs.”';
+            console.error('Failed to load Hávamál quote:', err);
+            quoteEl.textContent = '“A verse could not be fetched… but wisdom remains.”';
         });
 });
