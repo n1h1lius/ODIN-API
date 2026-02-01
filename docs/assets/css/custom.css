@@ -1,0 +1,52 @@
+/* Global dark theme */
+body {
+  background: #0d0d0d !important;
+  color: #e6e6e6 !important;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+
+/* Links */
+a {
+  color: #7db9ff !important;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #a8d4ff !important;
+}
+
+/* Headers */
+h1, h2, h3, h4 {
+  color: #ffffff !important;
+  margin-top: 2rem;
+}
+
+/* Page header (depends on theme) */
+.page-header {
+  background: #1a1a1a !important;
+  border-bottom: 1px solid #333 !important;
+}
+
+/* Main content */
+.main-content {
+  background: transparent !important;
+  padding: 2rem;
+}
+
+/* Code blocks */
+pre, code {
+  background: #1a1a1a !important;
+  color: #d4d4d4 !important;
+  border-radius: 6px;
+}
+
+/* Smooth fade-in animation */
+body {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

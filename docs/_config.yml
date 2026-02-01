@@ -1,0 +1,6 @@
+theme: jekyll-theme-cayman
+
+# Allow custom assets
+include:
+  - assets/css/custom.css
+  - assets/js/custom.js
