@@ -1,59 +1,73 @@
-// Smooth scrolling only for anchors that exist on the current page
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href');
-        const target = document.querySelector(targetId);
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-            // Anchor not found on this page → do nothing (prevents error)
-            console.log(`Anchor not found on this page: ${targetId}`);
-        }
-    });
-});
-
-// Toggle submenus (only when clicking on parent with children)
-document.querySelectorAll('.sidebar nav li.has-sub > a').forEach(link => {
-    link.addEventListener('click', e => {
-        const href = link.getAttribute('href');
-        // If it points to another page, let navigation happen normally
-        if (href && !href.startsWith('#') && href !== 'index.html' && href !== '') {
-            return;
-        }
-        // Otherwise toggle submenu
-        e.preventDefault();
-        link.parentElement.classList.toggle('active');
-    });
-});
-
-// Load random Hávamál quote
 document.addEventListener('DOMContentLoaded', () => {
+    const contentContainer = document.querySelector('.content');
     const quoteEl = document.getElementById('havamal-quote');
-    if (!quoteEl) return;
 
-    const apiUrl = 'https://odin-api.orlog.workers.dev/havamal/english/random';
+    // 1. Function to update only the footer wisdom
+    async function updateFooterQuote() {
+        if (!quoteEl) return;
+        try {
+            const response = await fetch('https://odin-api.orlog.workers.dev/havamal/english/random');
+            const data = await response.json();
+            quoteEl.textContent = Array.isArray(data) ? data[0].trim() : data.trim();
+        } catch (err) { console.error("Quote error"); }
+    }
 
-    fetch(apiUrl, { mode: 'cors' })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+    // 2. The core injection function
+    async function injectContent(url) {
+        // Fade out ONLY the content
+        contentContainer.style.opacity = '0';
+
+        try {
+            const response = await fetch(url);
+            const html = await response.text();
+
+            // We use a timeout to let the fade-out finish
+            setTimeout(() => {
+                // If the file is a full HTML, we extract .content
+                // If the file is just a fragment, we inject it directly
+                if (html.includes('<main')) {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    contentContainer.innerHTML = doc.querySelector('.content').innerHTML;
+                } else {
+                    contentContainer.innerHTML = html;
+                }
+
+                contentContainer.style.opacity = '1';
+                window.scrollTo(0, 0);
+                updateFooterQuote();
+            }, 300);
+        } catch (err) {
+            console.error("Could not load fragment:", err);
+        }
+    }
+
+    // 3. Event Listener for Navigation
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (!link) return;
+
+        const href = link.getAttribute('href');
+
+        // Rule: Only intercept internal .html links
+        if (href && href.endsWith('.html') && !href.startsWith('http')) {
+            e.preventDefault();
+            
+            // Sidebar UI logic: close others, open this one
+            const parentLi = link.parentElement;
+            if (parentLi?.classList.contains('has-sub')) {
+                document.querySelectorAll('.has-sub').forEach(li => li.classList.remove('active'));
+                parentLi.classList.add('active');
             }
-            return response.json();
-        })
-        .then(data => {
-            // API returns an array → take first element
-            let stanza = '';
-            if (Array.isArray(data) && data.length > 0) {
-                stanza = data[0].trim();
-            } else if (typeof data === 'string') {
-                stanza = data.trim();
-            }
 
-            quoteEl.textContent = stanza || '“The wise man is not showy about his knowledge…”';
-        })
-        .catch(err => {
-            console.error('Failed to load Hávamál quote:', err);
-            quoteEl.textContent = '“A verse could not be fetched… but wisdom remains.”';
-        });
+            // Perform the injection
+            injectContent(href);
+            
+            // Update URL without reloading
+            history.pushState(null, '', href);
+        }
+    });
+
+    // Initial load
+    updateFooterQuote();
 });

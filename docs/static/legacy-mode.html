@@ -1,46 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>ODINN API Documentation - Legacy Mode</title>
-  <link rel="stylesheet" href="../styles/main.css">
-  <script defer src="../scripts/main.js"></script>
-</head>
-<body>
-  <aside class="sidebar">
-    <h2>ODINN API</h2>
-    <div class="profile-wrapper">
-      <img src="https://avatars.githubusercontent.com/n1h1lius" alt="n1h1lius Profile">
-    </div>
-    <a href="https://github.com/n1h1lius" class="username">n1h1lius</a>
-    <nav>
-      <ul>
-        <li class="has-sub"><a href="../index.html">Introduction</a>
-          <ul>
-            <li><a href="index.html#goals">Goals</a></li>
-            <li><a href="index.html#current-focus">Current Focus</a></li>
-          </ul>
-        </li>
-        <li class="has-sub active"><a href="usage-modes.html">Usage Modes</a>
-          <ul>
-            <li><a href="legacy-mode.html">Legacy Mode</a></li>
-            <li><a href="advanced-mode.html">Advanced Mode</a></li>
-            <li><a href="usage-modes.html#metadata-mode">Metadata Mode (planned)</a></li>
-          </ul>
-        </li>
-        <li class="has-sub"><a href="api-reference.html">API Reference</a>
-          <ul>
-            <li><a href="api-reference.html#legacy-endpoints">Legacy Endpoints</a></li>
-            <li><a href="api-reference.html#advanced-endpoints">Advanced Endpoints</a></li>
-            <li><a href="api-reference.html#metadata-endpoints">Metadata Endpoints (planned)</a></li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
-  </aside>
-
-  <main class="content">
-    <section id="legacy-mode">
+<section id="legacy-mode">
       <h1>Legacy Mode</h1>
       <p>Legacy Mode uses the following pattern:</p>
       <pre><code>/{book}/{language}/{action}</code></pre>
@@ -61,13 +19,4 @@
       <h3>Notes</h3>
       <p>If the requested language is not available, the API falls back to english.</p>
       <p>Legacy data is stored in simple arrays, optimized for speed and simplicity.</p>
-    </section>
-  </main>
-
-  <footer>
-    <div class="havamal">
-      <p id="havamal-quote">Loading random Hávamál stanza...</p>
-    </div>
-  </footer>
-</body>
-</html>
+</section>

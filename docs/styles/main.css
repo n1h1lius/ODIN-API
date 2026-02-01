@@ -75,9 +75,9 @@ pre, code { font-size: 1.05rem; background: #111; padding: 1rem; border-radius: 
 
 
 .sidebar {
-    width: 22vw;
+    width: auto;
     min-width: 320px;
-    max-width: 380px;
+    max-width: 30vw;
     background: rgba(10,10,15,0.98);
     padding: 2.5rem 1.8rem;
     height: 100vh;
@@ -85,8 +85,8 @@ pre, code { font-size: 1.05rem; background: #111; padding: 1rem; border-radius: 
     top: 0;
     left: 0;
     border-right: 1px solid #2a2a2a;
-    overflow-y: auto;
-    z-index: 150;
+    overflow-y: clip;
+    z-index: 15000000;
 }
 .sidebar h2 {
     font-family: 'Norse', serif;
@@ -146,6 +146,8 @@ nav li.active > a::after { content: ' ▲'; }
     padding: 120px 3rem 140px;      
     flex: 1;
     max-width: 1200px;
+    transition: opacity 0.3s ease-in-out;
+    opaticy: 1;
 }
 
 footer {
@@ -164,9 +166,9 @@ footer {
     font-family: 'Norse', serif;
     font-style: italic;
     color: #c9a968;
-    font-size: 1.9rem;
-    width: 92%;                     
-    max-width: 1100px;
+    font-size: 1.3rem;
+    width: 98%;                     
+    max-width: 80vw;
     margin: 0 auto;
     padding: 1.2rem 2rem;
     background: rgba(20,22,28,0.8);
@@ -174,6 +176,10 @@ footer {
     border-radius: 12px;
     box-shadow: inset 0 0 30px rgba(0,0,0,0.75);
     text-align: center;
+}
+
+.fixed-header, .sidebar, footer {
+    opacity: 1 !important;
 }
 
 /* RESPONSIVE */
@@ -197,5 +203,5 @@ footer {
     .fixed-header { padding: 1.2rem; }
     .rune-message { font-size: 2rem; letter-spacing: 5px; }
     h1 { font-size: 3.2rem; }
-    .havamal { width: 96%; font-size: 1.6rem; padding: 1rem 1.5rem; }
+    .havamal { width: 96%; font-size: 1.3rem; padding: 1rem 1.5rem; }
 }
