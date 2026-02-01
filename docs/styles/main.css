@@ -139,6 +139,23 @@ nav li.has-sub > a::after { content: ' ▼'; font-size: 0.95rem; }
 nav li.active > ul { display: block; }
 nav li.active > a::after { content: ' ▲'; }
 
+.nav-link {
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;  
+    cursor: pointer;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+    display: block;
+    outline: none;
+}
+
+.nav-link:hover {
+    text-decoration: underline; 
+}
+
 
 .content {
     margin-left: 22vw;

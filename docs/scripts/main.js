@@ -1,129 +1,76 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Select the main persistent UI containers
     const contentContainer = document.querySelector('.content');
     const quoteEl = document.getElementById('havamal-quote');
 
-    /**
-     * Fetches a random stanza for the footer.
-     * Runs on initial load and after every page injection.
-     */
+    // --- 1. Wisdom Quote Logic ---
     async function updateFooterQuote() {
         if (!quoteEl) return;
         try {
             const response = await fetch('https://odin-api.orlog.workers.dev/havamal/english/random');
             const data = await response.json();
-            // API might return an array or a string
-            const stanza = Array.isArray(data) ? data[0].trim() : data.trim();
-            quoteEl.textContent = stanza;
+            quoteEl.textContent = Array.isArray(data) ? data[0].trim() : data.trim();
         } catch (err) {
-            console.error('Wisdom fetch failed:', err);
-            quoteEl.textContent = '“A verse could not be fetched… but wisdom remains.”';
+            quoteEl.textContent = '“Wisdom remains, even when the connection fails.”';
         }
     }
 
-    /**
-     * Surgical Scraper: Fetches an HTML file, extracts the .content div,
-     * and injects it into the current page.
-     */
-    async function scrapAndInject(filePath) {
-        // Visual feedback: Start fade-out ONLY for the content area
+    // --- 2. Surgical Injection Logic ---
+    async function injectFragment(filePath) {
+        // Fade out transition
         contentContainer.style.opacity = '0';
 
         try {
             const response = await fetch(filePath);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            
+            if (!response.ok) throw new Error("Fragment not found");
             const htmlText = await response.text();
 
-            // Parse the string into a temporary DOM object
             const parser = new DOMParser();
             const externalDoc = parser.parseFromString(htmlText, 'text/html');
             
-            // Look for the .content section in the external file
+            // We look for the .content div in the target file
             const newContent = externalDoc.querySelector('.content');
 
-            if (newContent) {
-                // Wait for the CSS transition (0.3s) before swapping the HTML
-                setTimeout(() => {
-                    // Update ONLY the inner content of the main container
+            setTimeout(() => {
+                if (newContent) {
                     contentContainer.innerHTML = newContent.innerHTML;
-                    
-                    // Update browser title
-                    document.title = externalDoc.title || "ODINN API";
+                } else {
+                    // If target is already a fragment (no .content div), inject raw
+                    contentContainer.innerHTML = htmlText;
+                }
 
-                    // Trigger fade-in
-                    contentContainer.style.opacity = '1';
-                    
-                    // Reset scroll to top of the new section
-                    window.scrollTo(0, 0);
-                    
-                    // Refresh the footer wisdom
-                    updateFooterQuote();
-                }, 300);
-            } else {
-                // Fallback if the .content div is not found in the target file
-                console.warn('Selector .content not found in the target file.');
-                //window.location.href = filePath;
-            }
+                contentContainer.style.opacity = '1';
+                window.scrollTo(0, 0);
+                updateFooterQuote(); // Refresh wisdom every time we change section
+            }, 300);
+
         } catch (err) {
-            console.error("Scraping failed:", err);
-            // Fallback: If fetch fails (like CORS or 404), do a hard reload
-            //window.location.href = filePath;
+            console.error("Injection failed:", err);
+            contentContainer.style.opacity = '1';
         }
     }
 
-    /**
-     * Global Click Interceptor
-     */
+    // --- 3. Click Listener (Buttons only) ---
     document.addEventListener('click', (e) => {
-        // We look for links that have our custom data-target attribute
-        const link = e.target.closest('a[data-target]');
-        
-        if (link) {
-            e.preventDefault();
-            e.stopPropagation();
+        const btn = e.target.closest('.nav-link');
+        if (!btn) return;
 
-            const targetFile = link.getAttribute('data-target');
+        const targetFile = btn.getAttribute('data-target');
+        if (!targetFile) return;
 
-            // --- Sidebar Folder Management ---
-            const parentLi = link.parentElement;
-            if (parentLi && parentLi.classList.contains('has-sub')) {
-                // Close other open menus to keep the sidebar clean
-                document.querySelectorAll('.sidebar nav li.has-sub').forEach(li => {
-                    if (li !== parentLi) li.classList.remove('active');
-                });
-                // Toggle current folder
-                parentLi.classList.add('active');
-            }
-
-            // Perform the AJAX injection
-            scrapAndInject(targetFile);
-
-            // Update the URL in the address bar without reloading the page
-            //history.pushState({ path: targetFile }, '', targetFile);
+        // Manage Sidebar Folders (Toggle active class)
+        const parentLi = btn.parentElement;
+        if (parentLi && parentLi.classList.contains('has-sub')) {
+            // Close other folders
+            document.querySelectorAll('.has-sub').forEach(li => {
+                if (li !== parentLi) li.classList.remove('active');
+            });
+            parentLi.classList.add('active');
         }
 
-        // --- Standard Anchor Handling (#goals, etc.) ---
-        // If a link is clicked that is just an anchor (no data-target)
-        const anchorLink = e.target.closest('a[href^="#"]');
-        if (anchorLink && !anchorLink.hasAttribute('data-target')) {
-            const targetId = anchorLink.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                e.preventDefault();
-                targetElement.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
+        // Execute Injection
+        injectFragment(targetFile);
     });
 
-    /**
-     * Handle the Browser Back and Forward buttons
-     */
-    window.addEventListener('popstate', (e) => {
-        // Reload the content based on the URL the user returned to
-        scrapAndInject(window.location.pathname);
-    });
-
-    // Initial run for the footer quote
+    // Initial Quote Load
     updateFooterQuote();
 });
